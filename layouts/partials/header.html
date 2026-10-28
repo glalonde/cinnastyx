@@ -1,11 +1,11 @@
-<nav class="header-inner header-grid">
+<nav aria-label="Main navigation" class="header-inner header-grid">
     <div class="header-menu">
 
-        <a class="home" href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+        <a class="home" href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a>
         {{ range .Site.Menus }}
             <ul class="nav">
                 {{ range . }}
-                    <li><a href="{{ .URL }}"><span>{{ .Name }}</span></a></li>
+                    <li><a href="{{ .URL | relURL }}"><span>{{ .Name }}</span></a></li>
                 {{ end }}
             </ul>
         {{ end }}

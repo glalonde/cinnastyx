@@ -1,34 +1,18 @@
-
-<!-- Need to provide page resources.-->
-{{if not (isset . "resource")}}
-{{ errorf "Specify resource=... in partial args." }}
-{{end}}
-
-{{ $sizes := "(min-width: 1400px) 1400px, 92vw"}}
-{{if (isset . "sizes")}}
-{{ $sizes = .sizes}}
-{{end}}
-
-{{ $classes := "post-standard-image"}}
-{{if (isset . "classes")}}
-{{ $classes = .classes}}
-{{end}}
-
-{{ $small := (partial "image-resize" (dict "resource" .resource "options" "300x"))}}
-{{ $medium := (partial "image-resize" (dict "resource" .resource "options" "600x"))}}
-{{ $large := (partial "image-resize" (dict "resource" .resource "options" "1000x"))}}
-{{ $xlarge := (partial "image-resize" (dict "resource" .resource "options" "2000x"))}}
-
-<!-- https://www.freecodecamp.org/news/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433/-->
+{{- $image := .resource -}}
+{{- if not $image -}}{{- errorf "Specify resource in responsive-image partial args." -}}{{- end -}}
+{{- $srcset := slice -}}
+{{- range slice 300 600 1000 2000 -}}
+  {{- if lt . $image.Width -}}
+    {{- $resized := $image.Resize (printf "%dx" .) -}}
+    {{- $srcset = $srcset | append (printf "%s %dw" $resized.RelPermalink $resized.Width) -}}
+  {{- end -}}
+{{- end -}}
+{{- $srcset = $srcset | append (printf "%s %dw" $image.RelPermalink $image.Width) -}}
 <div class="common-image-container">
-<div class="{{$classes}}">
-<img
-    srcset="{{$small}} 300w,
-            {{$medium}} 600w,
-            {{$large}} 1000w,
-            {{$xlarge}} 2000w"
-    sizes="{{.sizes}}"
-    src="{{$xlarge}}"
-/>
-</div>
+  <div class="{{ .classes | default "post-standard-image" }}">
+    <img src="{{ $image.RelPermalink }}" srcset="{{ delimit $srcset ", " }}"
+      sizes="{{ .sizes | default "(min-width: 1200px) 1200px, 92vw" }}"
+      width="{{ $image.Width }}" height="{{ $image.Height }}"
+      alt="{{ .alt | default "" }}" loading="{{ .loading | default "lazy" }}" decoding="async">
+  </div>
 </div>

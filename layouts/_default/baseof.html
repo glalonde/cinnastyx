@@ -1,38 +1,31 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
-		{{ with .OutputFormats.Get "RSS" }}
-			<link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" />
-			<link href="{{ .RelPermalink }}" rel="feed" type="application/rss+xml" title="{{ $.Site.Title }}" />
-		{{ end }}
-
-		<title>{{ .Title }}</title>
-
-		{{ $style := resources.Get  "css/colors-dark.scss"  | toCSS | minify | fingerprint }}
-		<link rel="stylesheet" href="{{ $style.Permalink }}">
-
-
-		{{ if or .Params.math .Site.Params.math }}
-			{{ partial "math.html" . }}
-		{{ end }}
-
-		{{ partial "head.html" . }}
-	</head>
-	<body>
-		<div class="bg-port"></div>
-		<header class="header">
-			{{ partial "header.html" . }}
-		</header>
-
-		<div class="outer">
-			<div id="page" class="inner">
-				{{ block "main" . }}{{ end }}
-				<footer id="footer"></footer>
-			</div>
-		</div>
-
-		{{ partial "foot.html" . }}
-	</body>
+{{- $scheme := .Site.Params.scheme | default "dark" -}}
+{{- if not (in (slice "dark" "light" "gray" "preference") $scheme) -}}
+  {{- errorf "Unknown Cinnastyx color scheme: %s" $scheme -}}
+{{- end -}}
+<html lang="{{ .Site.Language.Locale }}" data-scheme="{{ $scheme }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if not .IsHome }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
+  {{ partial "metadata.html" . }}
+  {{ with .OutputFormats.Get "RSS" }}
+    <link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}">
+  {{ end }}
+  {{ partial "styles.html" . }}
+  {{ if or .Params.math .Site.Params.math }}{{ partial "math.html" . }}{{ end }}
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="bg-port" aria-hidden="true"></div>
+  <header class="header">{{ partial "header.html" . }}</header>
+  <div class="outer">
+    <div id="page" class="inner">
+      <main id="main" tabindex="-1">{{ block "main" . }}{{ end }}</main>
+      {{ with .Site.Copyright }}<footer id="footer">{{ . | markdownify }}</footer>{{ end }}
+    </div>
+  </div>
+  {{ partial "foot.html" . }}
+</body>
 </html>

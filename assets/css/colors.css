@@ -1,0 +1,45 @@
+/* Theme colors; the default preserves Cinnastyx's dark palette. */
+:root {
+  color-scheme: dark;
+  --page-background: #151719;
+  --text: #aab5b6;
+  --link: #94b2d1;
+  --header-background: rgba(0, 0, 0, .5);
+  --pattern: url("../img/bgp1.gif");
+}
+:root[data-scheme="gray"] {
+  --background: #252525;
+  --page-background: #181818;
+  --pattern: none;
+}
+:root[data-scheme="light"] {
+  color-scheme: light;
+  --background: #fdf6e3;
+  --page-background: #eee8d5;
+  --text: #485b63;
+  --link: #245e85;
+  --color-lightgrey: #273b44;
+  --color-midgrey: #52646b;
+  --header-background: rgba(255, 255, 255, .8);
+  --pattern: url("../img/bgw1.gif");
+}
+@media (prefers-color-scheme: light) {
+  :root[data-scheme="preference"] {
+    color-scheme: light;
+    --background: #fdf6e3;
+    --page-background: #eee8d5;
+    --text: #485b63;
+    --link: #245e85;
+    --color-lightgrey: #273b44;
+    --color-midgrey: #52646b;
+    --header-background: rgba(255, 255, 255, .8);
+    --pattern: url("../img/bgw1.gif");
+  }
+}
+body { color: var(--text); background: var(--page-background); }
+a, .post-date, .post-content a { color: var(--link); }
+.article-title { color: var(--color-lightgrey); }
+.header { background: var(--header-background); }
+.bg-port { position: fixed; inset: 0; background-image: var(--pattern); image-rendering: pixelated; pointer-events: none; }
+blockquote { border-color: var(--accent-color); }
+hr { background: var(--text); height: 1px; border: 0; }

@@ -9,7 +9,7 @@ tags = [
 ]
 +++
 
-Hugo ships with several [Built-in Shortcodes](https://gohugo.io/content-management/shortcodes/#use-hugos-built-in-shortcodes) for rich content, along with a [Privacy Config](https://gohugo.io/about/hugo-and-gdpr/) and a set of Simple Shortcodes that enable static and no-JS versions of various social media embeds.
+Hugo ships with [built-in shortcodes](https://gohugo.io/shortcodes/) for rich content. These examples use YouTube and Vimeo embeds, plus a direct link to an X post. The direct link replaces the removed `twitter_simple` shortcode and keeps the build independent of the social media API.
 <!--more-->
 ---
 
@@ -21,14 +21,14 @@ Hugo ships with several [Built-in Shortcodes](https://gohugo.io/content-manageme
 
 ---
 
-## Twitter Simple Shortcode
+## X Post
 
-{{< twitter_simple 1085870671291310081 >}}
+[View the original post on X](https://x.com/i/status/1085870671291310081)
 
 <br>
 
 ---
 
-## Vimeo Simple Shortcode
+## Vimeo Shortcode
 
-{{< vimeo_simple 48912912 >}}
+{{< vimeo 48912912 >}}

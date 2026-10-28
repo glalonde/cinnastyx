@@ -12,4 +12,4 @@ So at that point, I reached for partials instead. Partials are slightly less erg
 
 This works.
 
-{{<responsive-image  src="cactus_flower" sizes="(min-width: 1400px) 1400px, 92vw">}}
+{{<responsive-image  src="cactus_flower" alt="Cactus flower" sizes="(min-width: 1400px) 1400px, 92vw">}}

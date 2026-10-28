@@ -3,7 +3,7 @@ description = "A light or dark grid theme"
 homepage = "https://github.com/glalonde"
 tags = ["blog", "light", "dark", "responsive"]
 features = []
-min_version = "0.1"
+min_version = "0.169.0"
 
 [author]
 	name = "glalonde"

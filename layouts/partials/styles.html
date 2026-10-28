@@ -1,0 +1,3 @@
+{{- $styles := slice (resources.Get "css/globals.css") (resources.Get "css/layout.css") (resources.Get "css/colors.css") -}}
+{{- $style := $styles | resources.Concat "css/cinnastyx.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">

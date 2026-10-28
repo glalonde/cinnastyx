@@ -1,18 +1,17 @@
-<article class="post post-card {{ if eq .Index  0}} post-card-large {{ end }}">
-	<a class="post-card-image-link" href="{{.Post.Permalink}}">
-		<!-- Check for an image named featured.jpg etc, to put in the post card view. -->
-		{{$maybe_featured := .Post.Resources.GetMatch "**featured*"}}
-		{{ if $maybe_featured }}
-			{{ partial "responsive-image" (dict "resource" $maybe_featured "sizes" "(max-width: 1000px) 400px, 800px" "classes" "post-card-image")}}
-		{{end}}
+{{ $featured := .Post.Resources.GetMatch "**featured*" }}
+<article class="post post-card {{ if not $featured }}no-image{{ end }} {{ if eq .Index  0}} post-card-large {{ end }}">
+	{{ if $featured }}
+	<a aria-label="{{ .Post.Title }}" class="post-card-image-link" href="{{.Post.RelPermalink}}">
+			{{ partial "responsive-image" (dict "resource" $featured "sizes" "(max-width: 1000px) 400px, 800px" "classes" "post-card-image" "alt" "" "loading" (cond (eq .Index 0) "eager" "lazy"))}}
 	</a>
+	{{ end }}
 	<div class="post-card-content">
-		<a class="post-card-content-link" href="{{.Post.Permalink}}">
+		<a class="post-card-content-link" href="{{.Post.RelPermalink}}">
 			<header class="post-card-header">
 				<h2 class="post-card-title">{{ .Post.Title }}{{ if .Post.Draft }}(Draft){{ end }}</h2>
 			</header>
 			<section class="post-card-excerpt">
-				<p>{{ .Post.Summary | plainify | safeHTML }} {{ if .Post.Truncated }} … {{ end }}</p>
+				<p>{{ .Post.Summary | plainify }} {{ if .Post.Truncated }} … {{ end }}</p>
 			</section>
 		</a>
 	</div>

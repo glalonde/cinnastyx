@@ -1,10 +1,13 @@
 {{ define "main" }}
-    <div class="post-grid">
-
-	{{ range $index, $element := .Paginator.Pages }}
-		{{ partial "post-card.html" (dict "Post" . "Index" $index) }}
-	{{ end }}
-
-	</div>
-	{{ partial "pagination.html" . }}
+  {{ if .IsHome }}<h1 class="visually-hidden">{{ .Site.Title }}</h1>{{ else }}<h1 class="list-title">{{ .Title }}</h1>{{ end }}
+  {{ with .Content }}<div class="list-intro">{{ . }}</div>{{ end }}
+  {{ $pages := .Pages }}
+  {{ if .IsHome }}{{ $pages = where .Site.RegularPages "Section" "in" (.Site.Params.mainSections | default (slice "posts")) }}{{ end }}
+  {{ $paginator := .Paginate $pages }}
+  <div class="post-grid">
+    {{ range $index, $element := $paginator.Pages }}
+      {{ partial "post-card.html" (dict "Post" . "Index" $index) }}
+    {{ end }}
+  </div>
+  {{ partial "pagination.html" . }}
 {{ end }}

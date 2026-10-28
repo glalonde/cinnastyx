@@ -13,4 +13,4 @@
 {{ errorf (printf "Image not found: %s" (.Get "src")) }}
 {{ end }}
 
-{{ partial "responsive-image" (dict "resource" $resource "classes" $classes)}}
+{{ partial "responsive-image" (dict "resource" $resource "classes" $classes "sizes" (.Get "sizes") "alt" (.Get "alt"))}}

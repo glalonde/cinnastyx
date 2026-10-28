@@ -1,12 +1,12 @@
+baseURL = "https://glalonde.github.io/cinnastyx/"
 title = "Cinnastyx"
 theme = "cinnastyx"
 # This is only to get exampleSite to work from within the theme directory, remove it if you're using a standard site layout.
 themesdir = "../.."
-paginate = 5
-pygmentsStyle = "solarized-dark" # solarized-light, -dark or -dark256
 copyright = ""
 
-relativeURLs = true
+locale = "en-US"
+enableRobotsTXT = true
 
 [params]
   scheme = "dark" # light, dark, gray or preference
@@ -20,3 +20,19 @@ relativeURLs = true
   [[menu.main]]
     name = "About"
     url = "/about"
+
+[pagination]
+  pagerSize = 5
+
+[markup.highlight]
+  style = "solarized-dark"
+
+# Content in this repository is trusted and includes HTML examples.
+[markup.goldmark.renderer]
+  unsafe = true
+
+[markup.goldmark.extensions.passthrough]
+  enable = true
+  [markup.goldmark.extensions.passthrough.delimiters]
+    block = [["\\[", "\\]"], ["$$", "$$"]]
+    inline = [["\\(", "\\)"]]
